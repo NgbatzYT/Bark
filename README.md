@@ -1,5 +1,4 @@
-# Revive of Bark (aka Grate) (fork this im not maintaining)
-
+# Revive of Bark (aka Grate)
 ### Imaginary Rules
 
 - No modifications that make Bark a cheat
