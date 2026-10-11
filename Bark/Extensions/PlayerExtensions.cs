@@ -13,12 +13,12 @@ public static class PlayerExtensions
 {
     public static void AddForce(this GTPlayer self, Vector3 v)
     {
-        self.GetComponent<Rigidbody>().velocity += v;
+        self.GetComponent<Rigidbody>().linearVelocity += v;
     }
 
     public static void SetVelocity(this GTPlayer self, Vector3 v)
     {
-        self.GetComponent<Rigidbody>().velocity = v;
+        self.GetComponent<Rigidbody>().linearVelocity = v;
     }
 
     public static PhotonView PhotonView(this VRRig rig)
@@ -29,12 +29,12 @@ public static class PlayerExtensions
 
     public static bool HasProperty(this VRRig rig, string key)
     {
-        return rig?.OwningNetPlayer?.HasProperty(key) ?? false;
+        return rig?.Creator?.HasProperty(key) ?? false;
     }
 
     public static bool ModuleEnabled(this VRRig rig, string mod)
     {
-        return rig?.OwningNetPlayer?.ModuleEnabled(mod) ?? false;
+        return rig?.Creator?.ModuleEnabled(mod) ?? false;
     }
 
     public static T GetProperty<T>(this NetPlayer? player, string key)
@@ -57,6 +57,6 @@ public static class PlayerExtensions
 
     public static VRRig? Rig(this NetPlayer? player)
     {
-        return RigHelper.GetActiveRigs().FirstOrDefault(rig => rig.OwningNetPlayer == player);
+        return RigHelper.GetActiveRigs().FirstOrDefault(rig => rig.Creator == player);
     }
 }

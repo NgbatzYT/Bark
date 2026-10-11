@@ -96,7 +96,7 @@ public class Piggyback : BarkModule
         foreach (var rig in RigHelper.GetActiveRigs())
             try
             {
-                if (rig.OwningNetPlayer.IsLocal) continue;
+                if (rig.Creator.IsLocal) continue;
                 var rigTransform = rig.transform.FindChildRecursive("head");
                 var distanceToTarget = Vector3.Distance(hand.position, rigTransform.position);
 

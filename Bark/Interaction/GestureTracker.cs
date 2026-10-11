@@ -47,7 +47,7 @@ public class GestureTracker : MonoBehaviour
     public float camOffset = -45f;
 
     private readonly float illProximityThreshold = .1f;
-    private readonly Queue<int> meatBeatCollisions = new();
+    private readonly Queue<int> BeatCollisions = new();
 
     public List<InputTracker?> inputs;
     private float lastBeat;
@@ -79,7 +79,7 @@ public class GestureTracker : MonoBehaviour
 
 
     // Gesture Actions
-    public Action OnMeatBeat;
+    public Action OnBeat;
 
     public InputTracker<float>?
         rightGrip;
@@ -154,7 +154,7 @@ public class GestureTracker : MonoBehaviour
     {
         // If it's been more than one second since you last beat your chest, reset
         if (Time.time - lastBeat > 1f)
-            meatBeatCollisions.Clear();
+            BeatCollisions.Clear();
     }
 
     public void OnDestroy()
@@ -165,7 +165,7 @@ public class GestureTracker : MonoBehaviour
         leftPointerObj?.Obliterate();
         rightPointerObj?.Obliterate();
         Instance = null;
-        OnMeatBeat = null;
+        OnBeat = null;
     }
 
     public void UpdateValues()
@@ -280,23 +280,23 @@ public class GestureTracker : MonoBehaviour
 
         lastBeat = Time.time;
 
-        if (meatBeatCollisions.Count > 3)
-            meatBeatCollisions.Dequeue();
+        if (BeatCollisions.Count > 3)
+            BeatCollisions.Dequeue();
         if (collider.gameObject == leftHand)
-            meatBeatCollisions.Enqueue(0);
+            BeatCollisions.Enqueue(0);
         else if (collider.gameObject == rightHand)
-            meatBeatCollisions.Enqueue(1);
-        if (meatBeatCollisions.Count < 4) return;
+            BeatCollisions.Enqueue(1);
+        if (BeatCollisions.Count < 4) return;
         int current, last = -1;
-        for (var i = 0; i < meatBeatCollisions.Count; i++)
+        for (var i = 0; i < BeatCollisions.Count; i++)
         {
-            current = meatBeatCollisions.ElementAt(i);
+            current = BeatCollisions.ElementAt(i);
             if (last == current) return;
             last = current;
         }
 
-        meatBeatCollisions.Clear();
-        OnMeatBeat?.Invoke();
+        BeatCollisions.Clear();
+        OnBeat?.Invoke();
     }
 
     private void BuildColliders()

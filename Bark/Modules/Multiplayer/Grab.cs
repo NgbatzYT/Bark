@@ -38,13 +38,13 @@ public class Grab : BarkModule
             if (!grabber.IsGripping())
             {
                 grabber = null;
-                rb.velocity = GTPlayer.Instance.bodyVelocityTracker.GetAverageVelocity(true) * 4.6f;
+                rb.linearVelocity = GTPlayer.Instance.bodyVelocityTracker.GetAverageVelocity(true) * 4.6f;
                 return;
             }
 
             var direction = grabber.controllingHand.position - GTPlayer.Instance.bodyCollider.transform.position;
             rb.AddForce(direction * 30, ForceMode.Impulse);
-            rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, .1f);
+            rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, .1f);
         }
     }
 
@@ -93,7 +93,7 @@ public class Grab : BarkModule
         foreach (var rig in RigHelper.GetActiveRigs())
             try
             {
-                if (rig.OwningNetPlayer.IsLocal ||
+                if (rig.Creator.IsLocal ||
                     rig.gameObject.GetComponent<GBMarker>()) continue;
 
                 markers.Add(rig.gameObject.AddComponent<GBMarker>());

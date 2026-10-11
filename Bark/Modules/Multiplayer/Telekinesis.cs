@@ -51,7 +51,7 @@ public class Telekinesis : BarkModule
                 sithlordHandParticles.Clear();
                 playerParticles.Stop();
                 playerParticles.Clear();
-                rb.velocity = GTPlayer.Instance.bodyVelocityTracker.GetAverageVelocity(true) * 2;
+                rb.linearVelocity = GTPlayer.Instance.bodyVelocityTracker.GetAverageVelocity(true) * 2;
                 return;
             }
 
@@ -61,7 +61,7 @@ public class Telekinesis : BarkModule
             var dampingThreshold = direction.magnitude * 10;
             //if (rb.velocity.magnitude > dampingThreshold)
             //if(direction.magnitude < 1)
-            rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, .1f);
+            rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, .1f);
         }
     }
 
@@ -209,7 +209,7 @@ public class Telekinesis : BarkModule
         foreach (var rig in RigHelper.GetActiveRigs())
             try
             {
-                if (rig.OwningNetPlayer.IsLocal ||
+                if (rig.Creator.IsLocal ||
                     rig.gameObject.GetComponent<TKMarker>()) continue;
 
                 markers.Add(rig.gameObject.AddComponent<TKMarker>());

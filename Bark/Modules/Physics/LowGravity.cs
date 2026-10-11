@@ -1,4 +1,6 @@
 ﻿using Bark.GUI;
+using Bark.Helpers;
+using Bark.Tools;
 using BepInEx.Configuration;
 using UnityEngine;
 
@@ -17,22 +19,21 @@ public class LowGravity : BarkModule
     private void Awake()
     {
         Instance = this;
-        baseGravity = UnityEngine.Physics.gravity;
+        baseGravity = new Vector3(0, -9.81f, 0);
     }
 
     protected override void OnEnable()
     {
         if (!MenuController.Instance.Built) return;
         base.OnEnable();
-        ReloadConfiguration();
         Plugin.MenuController?.GetComponent<UpsideDown>().button.AddBlocker(ButtonController.Blocker.MOD_INCOMPAT);
         active = true;
+        ReloadConfiguration();
     }
 
     protected override void Cleanup()
     {
-        if (!active) return;
-        UnityEngine.Physics.gravity = baseGravity;
+        GravityHelper.SetGravity(baseGravity);
         Plugin.MenuController?.GetComponent<UpsideDown>().button.RemoveBlocker(ButtonController.Blocker.MOD_INCOMPAT);
         active = false;
     }
@@ -41,7 +42,12 @@ public class LowGravity : BarkModule
     {
         gravityScale = Multiplier.Value / 5f;
         gravityScale = Mathf.Pow(gravityScale, 2f);
-        UnityEngine.Physics.gravity = baseGravity * gravityScale;
+
+        if (active)
+        {
+            GravityHelper.SetGravity(baseGravity * gravityScale);
+        }
+       
     }
 
     public static void BindConfigEntries()

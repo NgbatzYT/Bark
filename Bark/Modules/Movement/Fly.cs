@@ -43,7 +43,7 @@ public class Fly : BarkModule
             y * Vector3.up +
             inputDirection.z * playerForward;
         velocity *= Player.Instance.scale * speedScale;
-        rb.velocity = Vector3.Lerp(rb.velocity, velocity, acceleration);
+        rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, velocity, acceleration);
     }
 
     protected override void OnEnable()

@@ -122,8 +122,8 @@ public class Bubble : BarkModule
             bubble.AddComponent<GorillaSurfaceOverride>().overrideIndex = 110;
             bubble.GetComponent<Collider>().enabled = false;
             rb = GTPlayer.Instance.bodyCollider.attachedRigidbody;
-            baseDrag = rb.drag;
-            rb.drag = 1;
+            baseDrag = rb.linearDamping;
+            rb.linearDamping = 1;
         }
         catch (Exception e)
         {

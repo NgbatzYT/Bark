@@ -1,8 +1,9 @@
-﻿using System.Reflection;
-using Bark.GUI;
+﻿using Bark.GUI;
+using Bark.Helpers;
 using Bark.Modules.Physics;
 using BepInEx.Configuration;
 using GorillaLocomotion;
+using System.Reflection;
 using UnityEngine;
 
 namespace Bark.Modules.Movement;
@@ -17,7 +18,7 @@ public class Wallrun : BarkModule
 
     private void Awake()
     {
-        baseGravity = UnityEngine.Physics.gravity;
+        baseGravity = new Vector3(0, -9.81f, 0);
     }
 
     protected void FixedUpdate()
@@ -25,10 +26,9 @@ public class Wallrun : BarkModule
         var player = GTPlayer.Instance;
         if (player.leftHand.wasColliding || player.rightHand.wasColliding)
         {
-            var fieldInfo =
-                typeof(GTPlayer).GetField("lastHitInfoHand", BindingFlags.NonPublic | BindingFlags.Instance);
+            var fieldInfo = typeof(GTPlayer).GetField("lastHitInfoHand", BindingFlags.NonPublic | BindingFlags.Instance);
             hit = (RaycastHit)fieldInfo.GetValue(player);
-            UnityEngine.Physics.gravity = hit.normal * -baseGravity.magnitude * GravScale();
+            GravityHelper.SetGravity(hit.normal * -baseGravity.magnitude * GravScale());
         }
         else
         {
@@ -61,7 +61,7 @@ public class Wallrun : BarkModule
 
     protected override void Cleanup()
     {
-        UnityEngine.Physics.gravity = baseGravity;
+        GravityHelper.SetGravity(baseGravity);
     }
 
     public override string GetDisplayName()

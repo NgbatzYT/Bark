@@ -121,7 +121,7 @@ public class Boxing : BarkModule
             {
                 if (rig != GorillaTagger.Instance.offlineVRRig && rig != GorillaTagger.Instance.myVRRig &&
                     !glovedRigs.Contains(rig) &&
-                    rig.OwningNetPlayer != GorillaTagger.Instance.myVRRig.Owner) GiveGlovesTo(rig);
+                    rig.Creator != GorillaTagger.Instance.myVRRig.Owner) GiveGlovesTo(rig);
             }
             catch (Exception e)
             {
@@ -138,7 +138,7 @@ public class Boxing : BarkModule
         var righty = CreateGlove(rig.rightHandTransform, false);
         righty.rig = rig;
         gloves.Add(righty);
-        Logging.Debug("Gave gloves to", rig.OwningNetPlayer.NickName);
+        Logging.Debug("Gave gloves to", rig.Creator.NickName);
     }
 
     private BoxingGlove CreateGlove(Transform parent, bool isLeft = true)
@@ -162,7 +162,7 @@ public class Boxing : BarkModule
         if (force.magnitude < .5f * Player.Instance.scale) return;
         force.Normalize();
         force *= forceMultiplier * Buffness();
-        Player.Instance.bodyCollider.attachedRigidbody.velocity += force;
+        Player.Instance.bodyCollider.attachedRigidbody.linearVelocity += force;
         lastPunch = Time.time;
         GestureTracker.Instance.HapticPulse(false);
         GestureTracker.Instance.HapticPulse(true);

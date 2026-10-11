@@ -63,9 +63,9 @@ public class BarkGrabbable : BarkInteractable
                 rb.useGravity = true;
 
                 // Apply the force to the rigidbody
-                rb.velocity = GTPlayer.Instance.GetComponent<Rigidbody>().velocity +
+                rb.linearVelocity = GTPlayer.Instance.GetComponent<Rigidbody>().linearVelocity +
                               velEstimator.linearVelocity * throwForceMultiplier;
-                rb.velocity *= 1 / GTPlayer.Instance.scale;
+                rb.linearVelocity *= 1 / GTPlayer.Instance.scale;
                 rb.angularVelocity = velEstimator.angularVelocity;
             }
             else

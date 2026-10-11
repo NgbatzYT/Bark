@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Bark.Gestures;
 
-//TODO - Add a timeout on meat beat actions so you can't slowly accumulate them and accidentally trigger the menu
 public class PositionValidator : MonoBehaviour
 {
     public static PositionValidator Instance;

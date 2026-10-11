@@ -157,7 +157,7 @@ public class ThrowablePearl : BarkGrabbable
     {
         if (!thrown) return;
         ray.origin = transform.position;
-        ray.direction = rigidbody.velocity;
+        ray.direction = rigidbody.linearVelocity;
         RaycastHit hit;
         UnityEngine.Physics.Raycast(ray, out hit, ray.direction.magnitude, mask);
 

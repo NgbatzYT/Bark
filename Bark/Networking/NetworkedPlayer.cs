@@ -95,7 +95,7 @@ public class NetworkedPlayer : MonoBehaviour
                 }
             }
 
-            if (mod == Kamehameha.DisplayName && owner != NetworkSystem.Instance.LocalPlayer)
+            /*if (mod == Kamehameha.DisplayName && owner != NetworkSystem.Instance.LocalPlayer)
                 if (Kamehameha.c_Networked.Value)
                 {
                     var kmanager = gameObject.GetOrAddComponent<NetworkedKaemeManager>();
@@ -108,7 +108,7 @@ public class NetworkedPlayer : MonoBehaviour
                     {
                         kmanager.Obliterate();
                     }
-                }
+                }*/
         }
     }
 }

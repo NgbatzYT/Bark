@@ -65,14 +65,3 @@ public class VRRigLateUpdatePatch
         }
     }
 }
-
-//[HarmonyPatch(typeof(ControllerInputPoller))]
-//[HarmonyPatch("Update", MethodType.Normal)]
-//public class ControllerUpdatePatch
-//{
-//    private static void Prefix(ControllerInputPoller __instance)
-//    {
-//        Debug.Log("Lol");
-//        GestureTracker.Instance.UpdateValues();
-//    }
-//}

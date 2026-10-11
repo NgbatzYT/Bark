@@ -222,7 +222,7 @@ public class BananaGun : BarkGrabbable
         if (isGrappling)
         {
             var rigidBody = GTPlayer.Instance.bodyCollider.attachedRigidbody;
-            rigidBody.velocity +=
+            rigidBody.linearVelocity +=
                 transform.forward *
                 steerForce * Time.fixedDeltaTime * GTPlayer.Instance.scale;
         }

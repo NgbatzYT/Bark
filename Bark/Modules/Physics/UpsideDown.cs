@@ -4,57 +4,28 @@ using Bark.Patches;
 using GorillaLocomotion;
 using Bark.Extensions;
 using UnityEngine;
+using GorillaTag.Gravity;
+using Bark.Helpers;
 
 namespace Bark.Modules.Physics;
 
 public class UpsideDown : BarkModule
 {
     private Vector3 baseGravity;
-
-    private Transform turnParent;
     private Quaternion baseRotation;
     
     
     protected override void Cleanup()
     {
-        UpsideDownPatch.AffectedRigs.Remove(VRRig.LocalRig);
-        UnityEngine.Physics.gravity = baseGravity;
-        
-        turnParent.rotation = baseRotation;
+        GravityHelper.SetGravity(baseGravity);
+        GravityHelper.SetPlayerDirection(Vector3.up);
         
         Plugin.MenuController?.GetComponent<LowGravity>().button.RemoveBlocker(ButtonController.Blocker.MOD_INCOMPAT);
     }
 
     private void Awake()
     {
-        baseGravity = UnityEngine.Physics.gravity;
-        turnParent = GTPlayer.Instance.turnParent.transform;
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-        
-        NetworkPropertyHandler.Instance.OnPlayerModStatusChanged += OnPlayerModStatusChanged;
-        VRRigCachePatches.OnRigCached += OnRigCached;
-        
-    }
-    
-    private void OnPlayerModStatusChanged(NetPlayer player, string mod, bool enabled)
-    {
-        if (mod == GetDisplayName() && player != NetworkSystem.Instance.LocalPlayer)
-        {
-            if (enabled)
-                UpsideDownPatch.AffectedRigs.Add(player.Rig());
-            else if (UpsideDownPatch.AffectedRigs.Contains(player.Rig()))
-                UpsideDownPatch.AffectedRigs.Remove(player.Rig());
-        }
-    }
-
-    private void OnRigCached(NetPlayer player, VRRig rig)
-    {
-        if (UpsideDownPatch.AffectedRigs.Contains(rig))
-            UpsideDownPatch.AffectedRigs.Remove(rig);
+        baseGravity = new Vector3(0, -9.81f, 0);
     }
 
     protected override void OnEnable()
@@ -64,15 +35,9 @@ public class UpsideDown : BarkModule
         
         base.OnEnable();
 
-        UpsideDownPatch.AffectedRigs.Add(VRRig.LocalRig);
-        UnityEngine.Physics.gravity = -baseGravity;
-        
-        baseRotation = turnParent.rotation;
-            
-        Quaternion oldRot = turnParent.rotation;
-        oldRot.x = 180f;
-        turnParent.rotation = oldRot;
-        
+        GravityHelper.SetGravity(-baseGravity);
+        GravityHelper.SetPlayerDirection(Vector3.down);
+
         Plugin.MenuController?.GetComponent<LowGravity>().button.AddBlocker(ButtonController.Blocker.MOD_INCOMPAT);
     }
 

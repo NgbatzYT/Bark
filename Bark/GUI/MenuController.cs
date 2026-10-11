@@ -107,11 +107,7 @@ public class MenuController : BarkGrabbable
                 gameObject.AddComponent<Fireflies>(),
                 gameObject.AddComponent<ESP>(),
                 gameObject.AddComponent<RatSword>(),
-                gameObject.AddComponent<Kamehameha>()
-
-                //// Misc
-                //gameObject.AddComponent<ReturnToVS>(),
-                //gameObject.AddComponent<Lobby>(),
+                //gameObject.AddComponent<Kamehameha>()
             };
             modules.AddRange(tooAddmodules);
             ReloadConfiguration();
@@ -122,7 +118,7 @@ public class MenuController : BarkGrabbable
         }
     }
 
-    private void Start() // sigma sigma sigma s
+    private void Start() 
     {
         Summon();
         transform.SetParent(null);
@@ -270,7 +266,7 @@ public class MenuController : BarkGrabbable
     {
         if (_summonTracker != null)
             _summonTracker.OnPressed -= Summon;
-        GestureTracker.Instance.OnMeatBeat -= Summon;
+        GestureTracker.Instance.OnBeat -= Summon;
 
         var hand = _summonInputHand.Value == "left"
             ? XRNode.LeftHand
@@ -278,7 +274,7 @@ public class MenuController : BarkGrabbable
 
         if (_summonInput.Value == "gesture")
         {
-            GestureTracker.Instance.OnMeatBeat += Summon;
+            GestureTracker.Instance.OnBeat += Summon;
         }
         else
         {

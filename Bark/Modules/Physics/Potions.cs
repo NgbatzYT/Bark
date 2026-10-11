@@ -477,7 +477,7 @@ public class Cork : BarkGrabbable
     {
         transform.SetParent(null);
         rb.isKinematic = false;
-        rb.velocity = transform.up * 2.5f;
+        rb.linearVelocity = transform.up * 2.5f;
         popSource.Play();
     }
 }

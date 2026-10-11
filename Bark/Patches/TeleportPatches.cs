@@ -1,11 +1,12 @@
 ﻿// Stolen from https://github.com/Graicc/PracticeMod/blob/617a9f758077ea06cf0407a776580d6b021bcc35/PracticeMod/Patches/PlayerTeleportPatch.cs#L61
 // Used without permission, but what are you gonna do, sue me?
 
-using System;
-using System.Threading.Tasks;
 using Bark.Modules.Physics;
 using Bark.Tools;
+using GorillaLocomotion;
 using HarmonyLib;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using Player = GorillaLocomotion.GTPlayer;
 
@@ -31,37 +32,37 @@ internal class TeleportPatch
     private static float _teleportRotation;
     private static bool _killVelocity;
 
-    public static bool Prefix(Player __instance)
+    [HarmonyPostfix]
+    public static void Postfix(Player __instance)
     {
         try
         {
+
+
             if (_isTeleporting)
             {
-                Player.Instance.locomotionEnabledLayers = NoClip.layerMask;
+                __instance.TeleportTo(_teleportPosition, Quaternion.Euler(0, _teleportRotation, 0), !_killVelocity);
+                /*Player.Instance.locomotionEnabledLayers = NoClip.layerMask;
                 Player.Instance.bodyCollider.isTrigger = true;
                 Player.Instance.headCollider.isTrigger = true;
                 var playerRigidBody = __instance.GetComponent<Rigidbody>();
                 if (playerRigidBody != null)
                 {
-                    var correctedPosition = _teleportPosition - __instance.bodyCollider.transform.position +
-                                            __instance.transform.position;
+                    var correctedPosition = _teleportPosition - __instance.bodyCollider.transform.position + __instance.transform.position;
 
                     if (_killVelocity)
-                        playerRigidBody.velocity = Vector3.zero;
+                        playerRigidBody.linearVelocity = Vector3.zero;
 
                     __instance.transform.position = correctedPosition;
                     if (_rotate)
                         __instance.transform.rotation = Quaternion.Euler(0, _teleportRotation, 0);
 
 
-                    Traverse.Create(__instance).Field("lastLeftHandPosition")
-                        .SetValue(__instance.leftHand.handFollower.transform.position);
-                    Traverse.Create(__instance).Field("lastRightHandPosition")
-                        .SetValue(__instance.rightHand.handFollower.transform.position);
-
+                    Traverse.Create(__instance).Field("LastLeftHandPosition").SetValue(__instance.leftHand.handFollower.transform.position);
+                    Traverse.Create(__instance).Field("LastRightHandPosition").SetValue(__instance.rightHand.handFollower.transform.position);
                     Traverse.Create(__instance).Field("lastPosition").SetValue(correctedPosition);
-                    Traverse.Create(__instance).Field("lastOpenHeadPosition")
-                        .SetValue(__instance.headCollider.transform.position);
+                    Traverse.Create(__instance).Field("LastPosition").SetValue(correctedPosition);
+                    Traverse.Create(__instance).Field("lastOpenHeadPosition").SetValue(__instance.headCollider.transform.position);
 
                     GorillaTagger.Instance.offlineVRRig.transform.position = correctedPosition;
                 }
@@ -71,21 +72,17 @@ internal class TeleportPatch
                 Task.Delay(250).ContinueWith(delegate
                 {
                     Player.Instance.locomotionEnabledLayers = NoClip.Instance.baseMask;
-                });
+                });*/
                 _isTeleporting = false;
-                return true;
             }
         }
         catch (Exception e)
         {
             Logging.Exception(e);
         }
-
-        return true;
     }
 
-    internal static void TeleportPlayer(Vector3 destinationPosition, float destinationRotation,
-        bool killVelocity = true)
+    internal static void TeleportPlayer(Vector3 destinationPosition, float destinationRotation, bool killVelocity = true)
     {
         if (_isTeleporting)
             return;
@@ -107,35 +104,3 @@ internal class TeleportPatch
         _rotate = false;
     }
 }
-
-/* broke teleporting to v-stump
- [HarmonyPatch(typeof(Player), nameof(Player.TeleportTo), new Type[] { typeof(Vector3), typeof(Quaternion) })]
- internal class TeleportPatch
- {
-     private static bool Prefix(Player __instance, Vector3 position, Quaternion rotation)
-     {
-         var playerRigidBody = __instance.GetComponent<Rigidbody>();
-         if (playerRigidBody != null)
-         {
-             Vector3 correctedPosition = position - __instance.bodyCollider.transform.position + __instance.transform.position;
-             playerRigidBody.velocity = Vector3.zero;
-             __instance.transform.position = correctedPosition;
-             __instance.transform.rotation = rotation;
-             __instance.transform.rotation = rotation;
-             __instance.leftHandFollower.position = __instance.leftControllerTransform.position;
-             __instance.leftHandFollower.rotation = __instance.leftControllerTransform.rotation;
-             __instance.rightHandFollower.position = __instance.rightControllerTransform.position;
-             __instance.rightHandFollower.rotation = __instance.rightControllerTransform.rotation;
-             __instance.lastHeadPosition = __instance.headCollider.transform.position;
-
-             Traverse.Create(__instance).Field("lastLeftHandPosition").SetValue(__instance.leftHandFollower.transform.position);
-             Traverse.Create(__instance).Field("lastRightHandPosition").SetValue(__instance.rightHandFollower.transform.position);
-
-             Traverse.Create(__instance).Field("lastPosition").SetValue(position);
-             Traverse.Create(__instance).Field("lastOpenHeadPosition").SetValue(__instance.headCollider.transform.position);
-
-             GorillaTagger.Instance.offlineVRRig.transform.position = position;
-         }
-         return false;
-     }
- }*/

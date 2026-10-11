@@ -2,10 +2,9 @@
 
 internal static class PluginInfo
 {
-    public const string Guid = "com.sakuraa.gorillatag.Bark"; 
-    // thanks to com.kylethescientist.graze for previously maintaining the bark menu
+    public const string Guid = "com.kylethescientist.gorillatag.bark"; 
     public const string Name = "Bark";
-    public const string Version = "3.0.0";
+    public const string Version = "3.0.1";
 
     public const string Description =
         "Rules\n" +
@@ -15,9 +14,7 @@ internal static class PluginInfo
         "- Have fun.\n" +
         "\n" +
         "Credits\n" +
-        "- Sakuraa is the current maintainer of Bark.\n" +
-        "- Check out GtagCamera.com to support Sakuraa\n" +
+        "- Ngbatz is the current maintainer of Bark.\n" +
         "- Graze is the previous maintainer of Bark.\n" +
-        "- KyleTheScientist made the backbone of Bark called Bark.\n" +
-        "- baggZ, Gadabuda, Monky made mods.\n";
+        "- KyleTheScientist made the backbone of Bark called Bark.\n";
 }

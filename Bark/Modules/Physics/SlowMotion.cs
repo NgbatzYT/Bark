@@ -33,15 +33,6 @@ public class SlowMotion : BarkModule
         if (enabled)
             Time.timeScale = TimeScale.Value / 10f;
     }
-    //public static void BindConfigEntries()
-    //{
-    //    TimeScale = Plugin.configFile.Bind(
-    //        section: DisplayName,
-    //        key: "time scale",
-    //        defaultValue: 5,
-    //        description: "How slow time moves while the module is active (0 = time stop, 10 = normal time)"
-    //    );
-    //}
 
     public override string GetDisplayName()
     {

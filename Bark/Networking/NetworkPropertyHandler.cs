@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Bark.Extensions;
 using Bark.Modules;
 using Bark.Tools;
+using BepInEx.Configuration;
 using GorillaNetworking;
-using Bark.Extensions;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -25,10 +26,19 @@ public class NetworkPropertyHandler : MonoBehaviourPunCallbacks
     public Action<NetPlayer?> OnPlayerJoined;
     public Action<NetPlayer?> OnPlayerLeft;
     public Action<NetPlayer, string, bool> OnPlayerModStatusChanged;
+    private static ConfigEntry<bool>? _network;
 
     private void Awake()
     {
         Instance = this;
+
+        var inputDesc = new ConfigDescription("Set to true if you want networking, if set to true mod checkers can detect that you have bark.");
+        _network = Plugin.ConfigFile.Bind("General",
+            "network",
+            false,
+            inputDesc
+        );
+
         ChangeProperty(versionKey, PluginInfo.Version);
     }
 
@@ -41,6 +51,8 @@ public class NetworkPropertyHandler : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
+        if (_network.Value = false) return;
+
         if (properties.Count == 0 || Time.time - lastPropertyUpdate < refreshRate) return;
         Logging.Debug($"Updated properties ({properties.Count}):");
         foreach (var property in properties)
@@ -102,7 +114,7 @@ public class NetworkPropertyHandler : MonoBehaviourPunCallbacks
             case null when rig is null:
                 throw new Exception("Both player and rig are null");
             case null:
-                player = rig.OwningNetPlayer;
+                player = rig.Creator;
                 break;
             default:
             {

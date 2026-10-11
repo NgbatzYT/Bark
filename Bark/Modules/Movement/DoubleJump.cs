@@ -24,7 +24,7 @@ public class DoubleJump : BarkModule
         if (canDoubleJump && primaryPressed && !(_player.rightHand.wasColliding || _player.leftHand.wasColliding))
         {
             direction = (_player.headCollider.transform.forward + Vector3.up) / 2;
-            _rigidbody.velocity = new Vector3(direction.x, direction.y, direction.z) * _player.maxJumpSpeed *
+            _rigidbody.linearVelocity = new Vector3(direction.x, direction.y, direction.z) * _player.maxJumpSpeed *
                                   _player.scale * GetJumpForce(JumpForce.Value);
             canDoubleJump = false;
         }

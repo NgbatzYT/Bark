@@ -46,10 +46,10 @@ public class HandFly : BarkModule
     private void FixedUpdate()
     {
         if (ControllerInputPoller.instance.leftControllerIndexFloat > 0.5f)
-            GorillaTagger.Instance.rigidbody.velocity -= right!.GetVelocity() / SpeedScale * GTPlayer.Instance.scale;
+            GorillaTagger.Instance.rigidbody.linearVelocity -= right!.GetVelocity() / SpeedScale * GTPlayer.Instance.scale;
 
         if (ControllerInputPoller.instance.rightControllerIndexFloat > 0.5f)
-            GorillaTagger.Instance.rigidbody.velocity -= left!.GetVelocity() / SpeedScale * GTPlayer.Instance.scale;
+            GorillaTagger.Instance.rigidbody.linearVelocity -= left!.GetVelocity() / SpeedScale * GTPlayer.Instance.scale;
     }
 
     protected override void OnEnable()

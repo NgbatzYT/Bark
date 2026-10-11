@@ -12,12 +12,7 @@ public class Swim : BarkModule
     protected override void Start()
     {
         base.Start();
-        var source = GameObject.Find("Environment Objects/LocalObjects_Prefab/ForestToBeach/ForestToBeach_Prefab_V4/CaveWaterVolume");
-        if (source == null)
-        {
-            // Try alternative path for newer game versions
-            source = GameObject.Find("CaveWaterVolume");
-        }
+        var source = GameObject.Find("Environment Objects/LocalObjects_Prefab/ForestToBeach/ForestToBeach_Prefab_V4").transform.Find("ForestToBeach_Geo/CaveWaterVolume").gameObject ?? GameObject.Find("CaveWaterVolume");
         if (source == null || VRRig.LocalRig == null)
         {
             Bark.Tools.Logging.Warning("Swim: Could not find CaveWaterVolume or LocalRig");

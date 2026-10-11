@@ -12,4 +12,4 @@ internal class GameObjectPatch
         __result.GetComponent<Renderer>().material.shader = Shader.Find("GorillaTag/UberShader");
         __result.GetComponent<Renderer>().material.color = Color.white;
     }
-}
+} // why does this exist

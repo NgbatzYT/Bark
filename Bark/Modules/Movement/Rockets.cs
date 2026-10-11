@@ -211,7 +211,7 @@ public class Rocket : BarkGrabbable
     public override void OnDeselect(BarkInteractor interactor)
     {
         base.OnDeselect(interactor);
-        rb.velocity = GTPlayer.Instance.GetComponent<Rigidbody>().velocity;
+        rb.velocity = GTPlayer.Instance.GetComponent<Rigidbody>().linearVelocity;
     }
 
     public void SetupInteraction()

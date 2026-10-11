@@ -69,7 +69,7 @@ public class Firefly : MonoBehaviour
     {
         try
         {
-            if (!NetworkSystem.Instance.PlayerListOthers.Contains(rig.OwningNetPlayer) || !Fireflies.instance.enabled ||
+            if (!NetworkSystem.Instance.PlayerListOthers.Contains(rig.Creator) || !Fireflies.instance.enabled ||
                 !NetworkSystem.Instance.InRoom)
             {
                 fly.Obliterate();

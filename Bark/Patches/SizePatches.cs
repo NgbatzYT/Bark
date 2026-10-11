@@ -32,17 +32,3 @@ public class SizeChangePatch
         }
     }
 }
-
-//[HarmonyPatch(typeof(SizeManager))]
-//[HarmonyPatch("LerpSizeToNormal", MethodType.Normal)]
-//public class SizeLerpPatch
-//{
-//    private static void Postfix(float currentSize, ref float __result)
-//    {
-//        if (!Plugin.inRoom) return;
-//        if (Mathf.Abs(1f - currentSize) < 0.05f)
-//            __result = 1;
-//        else
-//            __result = Mathf.Lerp(currentSize, 1f, .75f * Time.fixedDeltaTime);
-//    }
-//}

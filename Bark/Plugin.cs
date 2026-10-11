@@ -21,7 +21,7 @@ using Utilla.Attributes;
 namespace Bark;
 
 [BepInPlugin(PluginInfo.Guid, PluginInfo.Name, PluginInfo.Version)]
-[BepInDependency("org.legoandmars.gorillatag.utilla", "1.5.0")]
+[BepInDependency("org.legoandmars.gorillatag.utilla", "1.7.2")]
 [ModdedGamemode]
 public class Plugin : BaseUnityPlugin
 {
@@ -38,8 +38,12 @@ public class Plugin : BaseUnityPlugin
     private NetworkPropertyHandler? nph;
 
     public static bool IsSteam { get; private set; }
-    public static bool DebugMode { get; protected set; } = false;
 
+#if !DEBUG
+    public static bool DebugMode { get; protected set; } = false;
+#elif DEBUG
+    public static bool DebugMode { get; protected set; } = true;
+#endif
     private void Awake()
     {
         Logging.Init();

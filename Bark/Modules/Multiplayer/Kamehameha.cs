@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Doesn't work currently am working on fixing it!
+/*using System;
 using System.Collections;
 using Bark.Gestures;
 using Bark.GUI;
@@ -87,7 +88,7 @@ public class Kamehameha : BarkModule
         isCharging = true;
         orb.gameObject.SetActive(true);
         orbBody.isKinematic = true;
-        orbBody.velocity = Vector3.zero;
+        orbBody.linearVelocity = Vector3.zero;
         GorillaTagger.Instance.offlineVRRig.PlayHandTapLocal(Random.Range(40, 56), false, 0.1f);
         Transform
             leftHand = GestureTracker.Instance.leftPalmInteractor.transform,
@@ -332,4 +333,4 @@ internal class NetworkedKaemeManager : MonoBehaviour
         bananaLine.SetPosition(0, start);
         bananaLine.SetPosition(1, start - direction * 100f);
     }
-}
+}*/
