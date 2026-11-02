@@ -33,7 +33,7 @@ public class LowGravity : BarkModule
 
     protected override void Cleanup()
     {
-        GravityHelper.SetGravity(baseGravity);
+        GravityHelper.RemoveGravity();
         Plugin.MenuController?.GetComponent<UpsideDown>().button.RemoveBlocker(ButtonController.Blocker.MOD_INCOMPAT);
         active = false;
     }

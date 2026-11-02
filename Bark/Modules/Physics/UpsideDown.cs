@@ -17,7 +17,7 @@ public class UpsideDown : BarkModule
     
     protected override void Cleanup()
     {
-        GravityHelper.SetGravity(baseGravity);
+        GravityHelper.RemoveGravity();
         GravityHelper.SetPlayerDirection(Vector3.up);
         
         Plugin.MenuController?.GetComponent<LowGravity>().button.RemoveBlocker(ButtonController.Blocker.MOD_INCOMPAT);

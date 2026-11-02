@@ -61,7 +61,7 @@ public class Wallrun : BarkModule
 
     protected override void Cleanup()
     {
-        GravityHelper.SetGravity(baseGravity);
+        GravityHelper.RemoveGravity();
     }
 
     public override string GetDisplayName()

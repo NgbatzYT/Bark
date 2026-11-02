@@ -8,16 +8,22 @@ namespace Bark.Helpers
 {
     public class GravityHelper
     {
-
         static Vector3 dir;
+
         public static void SetGravity(Vector3 direction)
         {
             dir = direction;
             GTPlayer.Instance.SetGravityOverride(Plugin.Instance, GravityOverride);
         }
+
         static void GravityOverride(GTPlayer player)
         {
             player.AddForce(dir, ForceMode.Acceleration);
+        }
+
+        public static void RemoveGravity()
+        {
+            GTPlayer.Instance.UnsetGravityOverride(Plugin.Instance);
         }
 
         public static void SetPlayerDirection(Vector3 upDirection)

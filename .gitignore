@@ -4,6 +4,6 @@
 
 /.vs
 /Grate/Directory.Build.props
-/.idea
-/.claude
+/Bark/bin
+/Bark/obj
 Bark.sln.DotSettings.user
